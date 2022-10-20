@@ -47,7 +47,7 @@ class Individual(object):
             temp += chr(x)
         return temp
 
-    def get_fitness(self, target:str=None) -> None:
+    def get_fitness(self, target: str = None) -> None:
         if target is None:
             raise Exception('\nNo target value available for Individual.get_fitness()\n')
 
@@ -55,7 +55,7 @@ class Individual(object):
             if self.chromosome[x] == ord(target[x]):
                 self.fitness += 1
 
-    def mutate(self, mutation_rate:float=0.1) -> None:
+    def mutate(self, mutation_rate: float = 0.1) -> None:
         test = random.random()
         if test <= mutation_rate:
             value = random.choice(self.chromosome)
@@ -68,7 +68,7 @@ class Population(object):
     """
         a population of Individual possible phrases.
     """
-    def __init__(self, popsize:int=12, target:str='t3sT', xover_function:str=None) -> None:
+    def __init__(self, popsize: int = 12, target: str = 't3sT', xover_function: str = None) -> None:
         self.popsize = popsize
         self.target = target
         self.target_length = len(target)
@@ -100,7 +100,7 @@ class Population(object):
 
     def xover_function(self) -> None:
         xover_name = f'xover_{self.xover_function_name}'
-        xover = Crossover(self, xover_name)
+        Crossover(self, xover_name)
 
 
 class GAPhrase:
@@ -127,7 +127,8 @@ class GAPhrase:
         self.init()
         letters = self.pop.population[0].output_chromosome()
         fittest = self.pop.population[0].fitness
-        print(f'\rGeneration: {self.generation:<5}\tTarget: "{self.target}"  \tFittest: "{letters}"  \tFitness: {fittest}', end='')
+        print(f'\rGeneration: {self.generation:<5}\tTarget: "{self.target}"  \tFittest: "{letters}"'
+              f'  \tFitness: {fittest}', end='')
         while self.pop.population[0].fitness < self.acceptance_value and self.generation < 10000:
             self.generation += 1
             self.pop.xover_function()
@@ -137,7 +138,8 @@ class GAPhrase:
             self.pop.sort_by_fitness()
             letters = self.pop.population[0].output_chromosome()
             fittest = self.pop.population[0].fitness
-            print(f'\rGeneration: {self.generation:<5}\tTarget: "{self.target}"  \tFittest: "{letters}"  \tFitness: {fittest}', end='')
+            print(f'\rGeneration: {self.generation:<5}\tTarget: "{self.target}"  \tFittest: "{letters}"'
+                  f'  \tFitness: {fittest}', end='')
 
 
 class Crossover(object):
